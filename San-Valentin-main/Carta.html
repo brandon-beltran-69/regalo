@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carta para mi Princesa</title>
+    <link rel="stylesheet" href="Carta diseño.css" />
+    <link
+        rel="shortcut icon"
+        href="https://www.pinclipart.com/picdir/big/580-5803539_6-pixel-heart-pixel-art-heart-png-clipart.png"
+        type="image/x-icon"
+    />
+</head>
+<body>
+    <div class="envelope-container" onclick="toggleOpen()">
+        <div class="envelope">
+            <div class="back-flap"></div>
+            <div class="bottom-flap"></div>
+            <div class="left-flap"></div>
+            <div class="right-flap"></div>
+            <div class="top-flap"></div>
+        </div>
+        <div class="letter" id="letter-content">
+            <img
+                src="img/Carta Eli uwu.png"
+                alt="Carta de amor"
+                class="letter-img"
+                onclick="openModal(this.src)"
+                ondblclick="openInNewTab(this.src)"
+            />
+        </div>
+    </div>
+
+   
+
+    <div class="modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <img id="modalImg" class="modal-img" onload="enableScroll()" onclick="openInNewTab(this.src)" />
+        </div>
+    </div>
+
+    <script>
+        let isOpen = false;
+        let modalOpen = false;
+
+        function toggleOpen() {
+            if (!isOpen) {
+                document.querySelector(".envelope").classList.add("open");
+                document.getElementById("letter-content").style.visibility = "visible";
+                document.getElementById("letter-content").style.opacity = "1";
+                isOpen = true;
+            }
+        }
+
+        function openModal(src) {
+            document.getElementById("modalImg").src = src;
+            document.getElementById("imageModal").style.display = "flex";
+            modalOpen = true;
+        }
+
+        function openInNewTab(src) {
+            window.open(src, '_blank');
+        }
+
+        function enableScroll() {
+            if (modalOpen) {
+                document.addEventListener("wheel", handleScroll);
+                document.addEventListener("keydown", handleKeyPress);
+            }
+        }
+
+        function closeModal() {
+            document.getElementById("imageModal").style.display = "none";
+            modalOpen = false;
+            
+            document.removeEventListener("wheel", handleScroll);
+            document.removeEventListener("keydown", handleKeyPress);
+        }
+
+        function scrollDown() {
+            window.scrollTo({
+                top: document.body.scrollHeight,
+                behavior: "smooth",
+            });
+        }
+
+        function scrollUp() {
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth",
+            });
+        }
+
+        function handleScroll(event) {
+            if (modalOpen) {
+                event.preventDefault();
+                if (event.deltaY > 0) {
+                    scrollDown();
+                } else {
+                    scrollUp();
+                }
+            }
+        }
+
+        function handleKeyPress(event) {
+            if (modalOpen) {
+                event.preventDefault();
+                if (event.key === "ArrowDown") {
+                    scrollDown();
+                } else if (event.key === "ArrowUp") {
+                    scrollUp();
+                } else if (event.key === "Escape") {
+                    closeModal();
+                }
+            }
+        }
+
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+</body>
+</html>

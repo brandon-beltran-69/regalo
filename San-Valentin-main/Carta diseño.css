@@ -1,0 +1,239 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #FFC2D1;
+    margin: 0;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+.envelope-container {
+    position: relative;
+    width: 300px;
+    height: 200px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.envelope {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #ffffff;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+/* Solapa trasera (base del sobre) */
+.back-flap {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: #550a0a;
+    border: 2px solid #410505;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+/* Solapa inferior */
+.bottom-flap {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0;
+    border-left: 150px solid transparent;
+    border-right: 150px solid transparent;
+    border-bottom: 100px solid #d32f2f;
+    transform-origin: bottom;
+    z-index: 2;
+    box-sizing: border-box;
+}
+
+/* Solapas laterales */
+.left-flap,
+.right-flap {
+    position: absolute;
+    top: 0;
+    width: 0;
+    height: 0;
+    border-bottom: 100px solid  #ffffff;
+    border-top: 100px solid  #ffffff;
+    z-index: 3;
+    box-sizing: border-box;
+}
+
+.left-flap {
+    left: 0;
+    border-right: 150px solid #d32f2f;
+}
+
+.right-flap {
+    right: 0;
+    border-left: 150px solid #d32f2f;
+}
+
+/* Solapa superior (la que se abre) */
+.top-flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color:rgb(65, 5, 5);
+    clip-path: polygon(0 0, 50% 50%, 100% 0);
+    transform-origin: top;
+    transition: transform 0.6s ease-in-out;
+    border-top: 2px solid rgb(65, 5, 5);
+    z-index: 4;
+    box-sizing: border-box;
+}
+
+.envelope.open .top-flap {
+    transform: rotateX(180deg);
+}
+
+
+
+.letter h2 {
+    margin: 0 0 15px 0;
+    font-size: 1.4em;
+    color: #d32f2f;
+}
+
+.letter p {
+    font-size: 1em;
+    color: rgb(90, 11, 11)f2f;
+    line-height: 1.5;
+}
+
+.envelope.open ~ .letter {
+    transform: translateY(-120%);
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Efecto hover */
+.envelope-container:hover {
+    transform: scale(1.02);
+}
+
+/* Responsividad */
+@media (max-width: 480px) {
+    .envelope-container {
+        width: calc(100% - 40px);
+        max-width: 240px;
+        height: 160px;
+    }
+
+    .letter {
+        font-size: 0.9em;
+        padding: 15px;
+        height: 110%;
+    }
+
+    .bottom-flap {
+        border-left-width: calc(50% - 0px);
+        border-right-width: calc(50% - 0px);
+        border-bottom-width: 80px;
+    }
+
+    .left-flap {
+        border-right-width: calc(50% - 0px);
+        border-bottom-width: 80px;
+        border-top-width: 80px;
+    }
+
+    .right-flap {
+        border-left-width: calc(50% - 0px);
+        border-bottom-width: 80px;
+        border-top-width: 80px;
+    }
+}
+
+@media (max-width: 320px) {
+    .envelope-container {
+        width: calc(100% - 20px);
+        height: 140px;
+    }
+
+    .letter {
+        font-size: 0.8em;
+        padding: 10px;
+    }
+}
+
+/* Carta */
+.letter {
+    position: absolute;
+    width: 90%;
+    height: 120%;
+    top: 50%;
+    left: 5%;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    transition: all 0.8s ease-in-out 0.3s;
+    text-align: center;
+    padding: 20px;
+    font-size: 1em;
+    z-index: 0;
+    box-sizing: border-box;
+    visibility: hidden;
+    opacity: 0;
+    background-color: white;
+}
+
+/* Imagen dentro de la carta */
+.letter-img {
+    width: 100%;
+    max-width: 250px;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Contenedor del modal */
+.modal-content {
+    position: relative;
+    max-width: 90%;
+    max-height: 90%;
+}
+
+/* Botón de cerrar */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+}
+
+/* Imagen en el modal */
+.modal-img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+    max-width: 600px;
+}
+
+
+
